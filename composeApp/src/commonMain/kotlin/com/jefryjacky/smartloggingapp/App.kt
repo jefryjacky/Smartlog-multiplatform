@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.jefryjacky.smartlog.SmartLog
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -33,6 +34,7 @@ fun App(clicked: () -> Unit) {
                 //showContent = !showContent
                 clicked()
             }) {
+                SmartLog.d("jefryjacky", "button clicked")
                 Text("Click me!")
             }
             AnimatedVisibility(showContent) {

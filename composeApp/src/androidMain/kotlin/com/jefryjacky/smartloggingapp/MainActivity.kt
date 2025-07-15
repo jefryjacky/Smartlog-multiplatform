@@ -8,12 +8,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.jefryjacky.smartlog.LogActivity
+import com.jefryjacky.smartlog.LogCatPrinter
+import com.jefryjacky.smartlog.SmartLog
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-
+        SmartLog.printers = listOf(LogCatPrinter())
         setContent {
             App{
                 val intent = Intent(this, LogActivity::class.java)

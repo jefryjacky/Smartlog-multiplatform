@@ -1,8 +1,7 @@
 package com.jefryjacky.smartlog
 
-class SmartLog (){
-
-    private var printers: List<Printer> = listOf()
+object SmartLog {
+    var printers: List<Printer> = listOf()
 
     fun v(tag: String, message: String){
         printers.forEach { it.log(LogLevel.VERBOSE, tag, message) }
@@ -26,18 +25,5 @@ class SmartLog (){
 
     fun wtf(tag: String, message: String){
         printers.forEach { it.log(LogLevel.ASSERT, tag, message) }
-    }
-
-    class Builder(){
-        private var printers: MutableList<Printer> = mutableListOf()
-        fun addPrinter(printer: Printer){
-            printers.add(printer)
-        }
-
-        fun build(): SmartLog{
-            val smartLog = SmartLog()
-            smartLog.printers = printers
-            return smartLog
-        }
     }
 }
