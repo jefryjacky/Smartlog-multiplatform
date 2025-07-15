@@ -20,7 +20,7 @@ import smartlogginapp.composeapp.generated.resources.compose_multiplatform
 
 @Composable
 @Preview
-fun App() {
+fun App(clicked: () -> Unit) {
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
         Column(
@@ -29,7 +29,10 @@ fun App() {
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Button(onClick = { showContent = !showContent }) {
+            Button(onClick = {
+                //showContent = !showContent
+                clicked()
+            }) {
                 Text("Click me!")
             }
             AnimatedVisibility(showContent) {
