@@ -1,12 +1,13 @@
 package com.jefryjacky.smartlog.domain.entity
 
+import com.jefryjacky.smartlog.LogLevel
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 
 data class LogEntity(
     val date: LocalDateTime,
-    val timezone: TimeZone,
     val tag: String,
+    val logLevel: LogLevel,
     val message: String,
     val error: String? = null
 )

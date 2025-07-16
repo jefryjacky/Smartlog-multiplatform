@@ -83,7 +83,7 @@ kotlin {
                 implementation(libs.androidx.lifecycle.viewmodel)
                 implementation(libs.androidx.lifecycle.runtimeCompose)
                 implementation(libs.kotlinx.datetime)
-
+                implementation(libs.androidx.room.runtime)
                 // Add KMP dependencies here
             }
         }
