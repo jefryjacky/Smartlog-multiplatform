@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.jefryjacky.smartlog.LogLevel
 import com.jefryjacky.smartlog.domain.entity.LogEntity
@@ -50,7 +51,9 @@ fun LogContent(state: LogState) {
                     Column(
                         modifier = Modifier.padding(8.dp),
                     ) {
-                        Text(text = log.message)
+                        Text(text = log.message,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis)
                         Row {
                             Spacer(Modifier.weight(1f))
                             Text(text = log.date.toString())
