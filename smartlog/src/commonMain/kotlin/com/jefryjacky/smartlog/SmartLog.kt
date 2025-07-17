@@ -1,10 +1,11 @@
 package com.jefryjacky.smartlog
 
-import com.jefryjacky.smartlog.domain.entity.LogEntity
-import com.jefryjacky.smartlog.repository.LogRepository
+import com.jefryjacky.smartlog.di.AppContainer
 
 object SmartLog {
-    var printers: List<Printer> = listOf(DatabasePrinter(LogRepository()))
+    val printers: MutableList<Printer> by lazy {
+        mutableListOf(DatabasePrinter(AppContainer.logRepository))
+    }
 
     fun v(tag: String, message: String){
         printers.forEach { it.log(LogLevel.VERBOSE, tag, message) }

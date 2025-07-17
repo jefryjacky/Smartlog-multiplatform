@@ -85,6 +85,7 @@ kotlin {
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.androidx.room.runtime)
                 implementation(libs.sqlite.bundled)
+                implementation(libs.navigation.compose)
                 // Add KMP dependencies here
             }
         }

@@ -32,9 +32,9 @@ fun App(clicked: () -> Unit) {
         ) {
             Button(onClick = {
                 //showContent = !showContent
+                SmartLog.d("jefryjacky", "button clicked")
                 clicked()
             }) {
-                SmartLog.d("jefryjacky", "button clicked")
                 Text("Click me!")
             }
             AnimatedVisibility(showContent) {

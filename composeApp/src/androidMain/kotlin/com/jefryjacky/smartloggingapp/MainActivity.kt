@@ -15,7 +15,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        SmartLog.printers = listOf(LogCatPrinter())
         setContent {
             App{
                 val intent = Intent(this, LogActivity::class.java)
