@@ -10,6 +10,6 @@ interface LogDao {
     @Insert
     suspend fun insert(log: LogTable)
 
-    @Query("SELECT * FROM Log")
+    @Query("SELECT * FROM Log ORDER BY date DESC LIMIT 10000")
     fun getLogs(): Flow<List<LogTable>>
 }
