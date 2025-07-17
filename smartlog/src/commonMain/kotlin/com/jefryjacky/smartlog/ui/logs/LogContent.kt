@@ -1,9 +1,21 @@
 package com.jefryjacky.smartlog.ui.logs
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import com.jefryjacky.smartlog.LogLevel
 import com.jefryjacky.smartlog.domain.entity.LogEntity
 import kotlinx.datetime.TimeZone
@@ -14,15 +26,42 @@ import kotlin.time.ExperimentalTime
 
 @Composable
 fun LogContent(state: LogState) {
-    LazyColumn {
-        items(state.logs.size) { index ->
-            val log = state.logs[index]
-            Row {
-                Text(text = log.date.toString())
-                Text(text = log.message)
+    val colorMap = mapOf<LogLevel, Color>(
+        Pair(LogLevel.VERBOSE, Color(0xFF69F0AE)),
+        Pair(LogLevel.DEBUG, Color(0xFF69F0AE)),
+        Pair(LogLevel.INFO, Color(0xFF69F0AE)),
+        Pair(LogLevel.WARN, Color(0xFFFFAB40)),
+        Pair(LogLevel.ERROR, Color(0xFFFF5252)),
+        Pair(LogLevel.ASSERT, Color(0xFFFF5252)),
+    )
+
+    Scaffold {
+        LazyColumn(
+            Modifier.padding(it).padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            items(state.logs.size) { index ->
+                val log = state.logs[index]
+                Card(
+                    colors = CardDefaults.cardColors().copy(containerColor = colorMap[log.logLevel]!!),
+                    border = BorderStroke(3.dp, colorMap[log.logLevel]!!),
+                    shape = RoundedCornerShape(6.dp),
+                ) {
+                    Column(
+                        modifier = Modifier.padding(8.dp),
+                    ) {
+                        Text(text = log.message)
+                        Row {
+                            Spacer(Modifier.weight(1f))
+                            Text(text = log.date.toString())
+                        }
+                    }
+                }
+
             }
         }
     }
+
 }
 
 @OptIn(ExperimentalTime::class)
