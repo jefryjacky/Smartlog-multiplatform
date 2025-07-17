@@ -19,12 +19,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.jefryjacky.smartlog.LogLevel
 import com.jefryjacky.smartlog.domain.entity.LogEntity
+import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.format
+import kotlinx.datetime.format.FormatStringsInDatetimeFormats
+import kotlinx.datetime.format.byUnicodePattern
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
+@OptIn(FormatStringsInDatetimeFormats::class)
 @Composable
 fun LogContent(state: LogState) {
     val colorMap = mapOf<LogLevel, Color>(
@@ -56,7 +61,9 @@ fun LogContent(state: LogState) {
                             overflow = TextOverflow.Ellipsis)
                         Row {
                             Spacer(Modifier.weight(1f))
-                            Text(text = log.date.toString())
+                            Text(text = log.date.format(LocalDateTime.Format {
+                                byUnicodePattern("dd/MM/yyyy HH:mm:ss:SSSSSS")
+                            }))
                         }
                     }
                 }
