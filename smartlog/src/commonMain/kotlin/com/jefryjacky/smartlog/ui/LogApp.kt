@@ -25,7 +25,7 @@ fun LogApp(
     ) {
         composable(Route.LOGS.routename){
             val viewModel: LogViewModel = viewModel(factory = AppContainer.logViewModel)
-            val state = viewModel.state.collectAsState().value
+            val state by viewModel.state.collectAsStateWithLifecycle()
             LogContent(state)
         }
     }
