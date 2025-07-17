@@ -1,4 +1,4 @@
-package com.jefryjacky.smartlog.ui
+package com.jefryjacky.smartlog.ui.logs
 
 import androidx.lifecycle.ViewModel
 
