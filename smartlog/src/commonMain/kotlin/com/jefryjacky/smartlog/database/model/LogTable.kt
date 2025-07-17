@@ -7,7 +7,7 @@ import com.jefryjacky.smartlog.LogLevel
 import com.jefryjacky.smartlog.domain.entity.LogEntity
 import kotlinx.datetime.LocalDateTime
 
-@Entity
+@Entity(tableName = "Log")
 data class LogTable(
     @PrimaryKey(autoGenerate = true)
     val id: Long,

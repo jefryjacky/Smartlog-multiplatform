@@ -84,6 +84,7 @@ kotlin {
                 implementation(libs.androidx.lifecycle.runtimeCompose)
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.androidx.room.runtime)
+                implementation(libs.sqlite.bundled)
                 // Add KMP dependencies here
             }
         }

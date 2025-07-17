@@ -1,7 +1,10 @@
 package com.jefryjacky.smartlog
 
+import com.jefryjacky.smartlog.domain.entity.LogEntity
+import com.jefryjacky.smartlog.repository.LogRepository
+
 object SmartLog {
-    var printers: List<Printer> = listOf()
+    var printers: List<Printer> = listOf(DatabasePrinter(LogRepository()))
 
     fun v(tag: String, message: String){
         printers.forEach { it.log(LogLevel.VERBOSE, tag, message) }
