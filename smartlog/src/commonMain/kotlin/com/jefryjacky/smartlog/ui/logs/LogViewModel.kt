@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.jefryjacky.smartlog.repository.LogRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LogViewModel(
@@ -22,7 +23,7 @@ class LogViewModel(
 
     private suspend fun getLog(){
         logRepository.getLogs().collect { logs->
-            _state.value = _state.value.copy(logs = logs)
+            _state.update { it.copy(logs = logs) }
         }
     }
 }
