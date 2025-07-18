@@ -18,6 +18,7 @@ class DatabasePrinter constructor(
         throwable: Throwable?
     ) {
         val entity = LogEntity(
+            id = 0,
             date = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
             logLevel = logLevel,
             tag = tag,

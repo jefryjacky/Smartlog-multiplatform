@@ -150,3 +150,9 @@ dependencies {
 room {
     schemaDirectory("$projectDir/schemas")
 }
+
+compose.resources {
+    publicResClass = false
+    packageOfResClass = "smartlogginapp.smartlog.generated.resources"
+    generateResClass = always
+}
