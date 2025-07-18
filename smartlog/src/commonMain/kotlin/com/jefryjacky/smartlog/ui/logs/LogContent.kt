@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -46,8 +47,8 @@ fun LogContent(state: LogState) {
             Modifier.padding(it).padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            items(state.logs.size) { index ->
-                val log = state.logs[index]
+            items(state.logs,
+                key = {it.id}) { log->
                 Card(
                     colors = CardDefaults.cardColors().copy(containerColor = colorMap[log.logLevel]!!),
                     border = BorderStroke(3.dp, colorMap[log.logLevel]!!),
@@ -79,6 +80,7 @@ fun LogContent(state: LogState) {
 @Composable
 fun LogContentPreview(){
     val state = LogState(listOf(LogEntity(
+        1,
         date = Clock.System.now().toLocalDateTime(TimeZone.UTC),
         "tag", logLevel = LogLevel.VERBOSE,"message")))
     LogContent(state)

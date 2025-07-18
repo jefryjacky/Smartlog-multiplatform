@@ -9,7 +9,7 @@ import kotlinx.datetime.LocalDateTime
 
 @Entity(tableName = "Log")
 data class LogTable(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = true,)
     val id: Long,
     val date: String,
     val tag: String,
@@ -21,6 +21,7 @@ data class LogTable(
 
     fun toEntity(): LogEntity{
         return LogEntity(
+            id = id,
             date = LocalDateTime.parse(date),
             tag = tag,
             logLevel = LogLevel.fromPriority(logLevel)?: LogLevel.VERBOSE,

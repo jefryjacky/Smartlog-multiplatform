@@ -5,6 +5,7 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 
 data class LogEntity(
+    val id: Long,
     val date: LocalDateTime,
     val tag: String,
     val logLevel: LogLevel,
