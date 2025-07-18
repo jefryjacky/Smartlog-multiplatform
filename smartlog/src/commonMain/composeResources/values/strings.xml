@@ -1,0 +1,8 @@
+<resources>
+    <string name="verbose">Verbose</string>
+    <string name="debug">Debug</string>
+    <string name="info">Info</string>
+    <string name="warning">Warning</string>
+    <string name="error">Error</string>
+    <string name="assert">Assert</string>
+</resources>
