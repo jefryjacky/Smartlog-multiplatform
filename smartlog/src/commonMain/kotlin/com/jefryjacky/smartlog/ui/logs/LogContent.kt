@@ -5,14 +5,18 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -38,12 +42,14 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import smartlogginapp.smartlog.generated.resources.Res
 import smartlogginapp.smartlog.generated.resources.assert
+import smartlogginapp.smartlog.generated.resources.baseline_play_arrow_24
 import smartlogginapp.smartlog.generated.resources.debug
 import smartlogginapp.smartlog.generated.resources.error
 import smartlogginapp.smartlog.generated.resources.info
 import smartlogginapp.smartlog.generated.resources.outline_info_24
 import smartlogginapp.smartlog.generated.resources.outline_warning_24
 import smartlogginapp.smartlog.generated.resources.outline_error_24
+import smartlogginapp.smartlog.generated.resources.outline_filter_alt_24
 import smartlogginapp.smartlog.generated.resources.verbose
 import smartlogginapp.smartlog.generated.resources.warning
 import kotlin.time.Clock
@@ -79,7 +85,22 @@ fun LogContent(state: LogState) {
         Pair(LogLevel.ASSERT, Res.string.assert),
     )
 
-    Scaffold {
+    Scaffold(
+        bottomBar = {
+            BottomAppBar(
+                modifier = Modifier.height(50.dp),
+                actions = {
+                IconButton(onClick = {}){
+                    Icon(painter = painterResource(Res.drawable.baseline_play_arrow_24),
+                        null)
+                }
+                IconButton(onClick = {}){
+                    Icon(painter = painterResource(Res.drawable.outline_filter_alt_24),
+                        null)
+                }
+            })
+        }
+    ) {
         LazyColumn(
             Modifier.padding(it).padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
