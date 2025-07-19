@@ -5,4 +5,8 @@
     <string name="warning">Warning</string>
     <string name="error">Error</string>
     <string name="assert">Assert</string>
+    <string name="search">Search</string>
+    <string name="log_level">Log level</string>
+    <string name="apply">Apply</string>
+    <string name="reset">Reset</string>
 </resources>

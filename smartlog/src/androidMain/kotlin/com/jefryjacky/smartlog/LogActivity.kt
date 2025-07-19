@@ -9,7 +9,9 @@ class LogActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            LogApp {  }
+            LogApp {
+
+            }
         }
     }
 }

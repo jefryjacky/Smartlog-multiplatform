@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,44 +19,41 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.jefryjacky.smartlog.LogLevel
 import com.jefryjacky.smartlog.domain.entity.LogEntity
+import com.jefryjacky.smartlog.ui.logs.filter.FilterBottomSheetContent
+import com.jefryjacky.smartlog.ui.logs.filter.FilterBottomState
+import com.jefryjacky.smartlog.ui.logs.filter.FilterEvent
+import com.jefryjacky.smartlog.ui.stringResource
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import kotlinx.datetime.format.byUnicodePattern
 import kotlinx.datetime.toLocalDateTime
-import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import smartlogginapp.smartlog.generated.resources.Res
-import smartlogginapp.smartlog.generated.resources.assert
 import smartlogginapp.smartlog.generated.resources.baseline_play_arrow_24
-import smartlogginapp.smartlog.generated.resources.debug
-import smartlogginapp.smartlog.generated.resources.error
-import smartlogginapp.smartlog.generated.resources.info
 import smartlogginapp.smartlog.generated.resources.outline_info_24
 import smartlogginapp.smartlog.generated.resources.outline_warning_24
 import smartlogginapp.smartlog.generated.resources.outline_error_24
 import smartlogginapp.smartlog.generated.resources.outline_filter_alt_24
-import smartlogginapp.smartlog.generated.resources.verbose
-import smartlogginapp.smartlog.generated.resources.warning
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
 @OptIn(FormatStringsInDatetimeFormats::class)
 @Composable
-fun LogContent(state: LogState) {
+fun LogContent(state: LogState,
+               filterBottomState: FilterBottomState,
+               event: (LogEvent)-> Unit,
+               filterEvent: (FilterEvent)-> Unit) {
     val colorMap = mapOf(
         Pair(LogLevel.VERBOSE, Color(0xFF69F0AE)),
         Pair(LogLevel.DEBUG, Color(0xFF69F0AE)),
@@ -76,15 +72,6 @@ fun LogContent(state: LogState) {
         Pair(LogLevel.ASSERT, Res.drawable.outline_error_24),
     )
 
-    val textMap = mapOf(
-        Pair(LogLevel.VERBOSE,Res.string.verbose),
-        Pair(LogLevel.DEBUG, Res.string.debug),
-        Pair(LogLevel.INFO, Res.string.info),
-        Pair(LogLevel.WARN, Res.string.warning),
-        Pair(LogLevel.ERROR, Res.string.error),
-        Pair(LogLevel.ASSERT, Res.string.assert),
-    )
-
     Scaffold(
         bottomBar = {
             BottomAppBar(
@@ -94,7 +81,9 @@ fun LogContent(state: LogState) {
                     Icon(painter = painterResource(Res.drawable.baseline_play_arrow_24),
                         null)
                 }
-                IconButton(onClick = {}){
+                IconButton(onClick = {
+                    event(LogEvent.FilterEvent)
+                }){
                     Icon(painter = painterResource(Res.drawable.outline_filter_alt_24),
                         null)
                 }
@@ -119,7 +108,7 @@ fun LogContent(state: LogState) {
                             Icon(painter = painterResource(iconMap[log.logLevel]!!),
                                 null)
                             Spacer(Modifier.width(4.dp))
-                            Text(stringResource(textMap[log.logLevel]!!),
+                            Text(log.logLevel.stringResource(),
                                 style = MaterialTheme.typography.bodySmall)
                         }
 
@@ -137,6 +126,9 @@ fun LogContent(state: LogState) {
 
             }
         }
+        FilterBottomSheetContent(filterBottomState){
+            filterEvent(it)
+        }
     }
 
 }
@@ -144,10 +136,14 @@ fun LogContent(state: LogState) {
 @OptIn(ExperimentalTime::class)
 @Preview()
 @Composable
-fun LogContentPreview(){
+private fun LogContentPreview(){
     val state = LogState(listOf(LogEntity(
         1,
         date = Clock.System.now().toLocalDateTime(TimeZone.UTC),
         "tag", logLevel = LogLevel.VERBOSE,"message")))
-    LogContent(state)
+    LogContent(state, FilterBottomState(), event = {
+
+    }, filterEvent = {
+
+    })
 }

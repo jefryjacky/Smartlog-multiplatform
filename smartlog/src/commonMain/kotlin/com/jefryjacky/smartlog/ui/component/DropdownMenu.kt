@@ -27,14 +27,14 @@ import smartlogginapp.smartlog.generated.resources.outline_keyboard_arrow_down_2
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DropwdownMenu(
+fun <T> DropdownMenu(
     label:String,
     value: String,
     modifier: Modifier,
-    list: List<String>,
+    list: List<Pair<T, String>>,
     supportingText: String = "",
     isError: Boolean = false,
-    selectedCallback: (String) -> Unit
+    selectedCallback: (T) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
     Column {
@@ -63,11 +63,11 @@ fun DropwdownMenu(
                     expanded = false
                 },
             ) {
-                list.forEach {
+                list.forEach { (key, value)->
                     DropdownMenuItem(
-                        text = { Text(it, style = MaterialTheme.typography.bodyLarge) },
+                        text = { Text(value, style = MaterialTheme.typography.bodyLarge) },
                         onClick = {
-                            selectedCallback.invoke(it)
+                            selectedCallback.invoke(key)
                             expanded = false
                         },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
@@ -87,10 +87,10 @@ fun DropwdownMenu(
 @Composable
 @Preview
 private fun DropdownMenuPreview(){
-    DropwdownMenu(
+    DropdownMenu<String>(
         modifier = Modifier.fillMaxWidth(),
         label = "From",
-        list = listOf("USD", "IDR"),
+        list = listOf(),
         supportingText = "Select currency",
         value = "USD",
         isError = true

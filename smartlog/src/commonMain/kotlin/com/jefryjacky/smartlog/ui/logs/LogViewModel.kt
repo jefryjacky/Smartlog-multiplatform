@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jefryjacky.smartlog.SmartLog
 import com.jefryjacky.smartlog.repository.LogRepository
+import com.jefryjacky.smartlog.ui.logs.filter.FilterBottomState
+import com.jefryjacky.smartlog.ui.logs.filter.FilterEvent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -35,10 +37,37 @@ class LogViewModel(
         }
     }
     val state = _state.asStateFlow()
+    private val _filterBottomSheet = MutableStateFlow(FilterBottomState())
+    val filterBottomSheet = _filterBottomSheet.asStateFlow()
 
     private suspend fun getLog(){
         logRepository.getLogs().collect { logs->
             _state.update { it.copy(logs = logs) }
+        }
+    }
+
+    fun handleEvent(event: LogEvent){
+        when(event){
+            is LogEvent.FilterEvent -> {
+                _filterBottomSheet.update { it.copy(isOpen = !it.isOpen) }
+            }
+        }
+    }
+
+    fun handleFilterEvent(event: FilterEvent){
+        when(event){
+            is FilterEvent.DismissEvent -> {
+                _filterBottomSheet.update { it.copy(isOpen = false) }
+            }
+            is FilterEvent.LogLevelChanged -> {
+                _filterBottomSheet.update { it.copy(logLevel = event.logLevel) }
+            }
+
+            FilterEvent.Apply -> {}
+            FilterEvent.ResetEvent -> {}
+            is FilterEvent.SearchEvent -> {
+                _filterBottomSheet.update { it.copy(search = event.search) }
+            }
         }
     }
 }

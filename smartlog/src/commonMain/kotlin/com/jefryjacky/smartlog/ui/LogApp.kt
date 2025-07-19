@@ -26,7 +26,12 @@ fun LogApp(
         composable(Route.LOGS.routename){
             val viewModel: LogViewModel = viewModel(factory = AppContainer.logViewModel)
             val state by viewModel.state.collectAsStateWithLifecycle()
-            LogContent(state)
+            val filterBottomSheetState by viewModel.filterBottomSheet.collectAsStateWithLifecycle()
+            LogContent(state, filterBottomState = filterBottomSheetState, event = {
+                viewModel.handleEvent(it)
+            }, filterEvent = {
+                viewModel.handleFilterEvent(it)
+            })
         }
     }
     LaunchedEffect(navController) {
