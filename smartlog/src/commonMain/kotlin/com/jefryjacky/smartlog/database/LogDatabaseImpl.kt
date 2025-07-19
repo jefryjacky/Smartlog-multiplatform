@@ -1,5 +1,6 @@
 package com.jefryjacky.smartlog.database
 
+import com.jefryjacky.smartlog.LogLevel
 import com.jefryjacky.smartlog.database.model.LogDao
 import com.jefryjacky.smartlog.database.model.LogTable
 import com.jefryjacky.smartlog.domain.entity.LogEntity
@@ -29,6 +30,14 @@ class LogDatabaseImpl @OptIn(DelicateCoroutinesApi::class) constructor(
 
     override fun getLogs(): Flow<List<LogEntity>> {
         return dao.getLogs()
+            .flowOn(ioDispatcher)
+            .map {
+                it.map { it.toEntity() }
+            }
+    }
+
+    override fun filter(logLevel: LogLevel): Flow<List<LogEntity>> {
+        return  dao.filter(logLevel.priority)
             .flowOn(ioDispatcher)
             .map {
                 it.map { it.toEntity() }

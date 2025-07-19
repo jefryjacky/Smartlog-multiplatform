@@ -6,6 +6,7 @@ import com.jefryjacky.smartlog.SmartLog
 import com.jefryjacky.smartlog.repository.LogRepository
 import com.jefryjacky.smartlog.ui.logs.filter.FilterBottomState
 import com.jefryjacky.smartlog.ui.logs.filter.FilterEvent
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,14 +15,15 @@ import kotlinx.coroutines.launch
 
 class LogViewModel(
     private val logRepository: LogRepository): ViewModel() {
+    private lateinit var job: Job
 
         private val _state = MutableStateFlow(LogState())
 
 
     init {
-        viewModelScope.launch {
+
             getLog()
-        }
+
         viewModelScope.launch {
             SmartLog.v("LogViewModel", "test message1")
             delay(5000)
@@ -40,9 +42,11 @@ class LogViewModel(
     private val _filterBottomSheet = MutableStateFlow(FilterBottomState())
     val filterBottomSheet = _filterBottomSheet.asStateFlow()
 
-    private suspend fun getLog(){
-        logRepository.getLogs().collect { logs->
-            _state.update { it.copy(logs = logs) }
+    private fun getLog(){
+        job = viewModelScope.launch {
+            logRepository.getLogs().collect { logs ->
+                _state.update { it.copy(logs = logs) }
+            }
         }
     }
 
@@ -63,7 +67,16 @@ class LogViewModel(
                 _filterBottomSheet.update { it.copy(logLevel = event.logLevel) }
             }
 
-            FilterEvent.Apply -> {}
+            FilterEvent.Apply -> {
+                _filterBottomSheet.update { it.copy(isOpen = false) }
+                job.cancel()
+                job = viewModelScope.launch {
+                    logRepository.filter(filterBottomSheet.value.logLevel)
+                        .collect { result->
+                            _state.update { it.copy(logs = result) }
+                        }
+                }
+            }
             FilterEvent.ResetEvent -> {}
             is FilterEvent.SearchEvent -> {
                 _filterBottomSheet.update { it.copy(search = event.search) }
