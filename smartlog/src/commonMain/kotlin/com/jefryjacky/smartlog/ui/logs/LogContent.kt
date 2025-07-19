@@ -31,6 +31,9 @@ import com.jefryjacky.smartlog.ui.logs.filter.FilterBottomSheetContent
 import com.jefryjacky.smartlog.ui.logs.filter.FilterBottomState
 import com.jefryjacky.smartlog.ui.logs.filter.FilterEvent
 import com.jefryjacky.smartlog.ui.stringResource
+import com.jefryjacky.smartlog.ui.theme.greenDarkMode
+import com.jefryjacky.smartlog.ui.theme.orangeDarkMode
+import com.jefryjacky.smartlog.ui.theme.redDarkMode
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format
@@ -55,12 +58,12 @@ fun LogContent(state: LogState,
                event: (LogEvent)-> Unit,
                filterEvent: (FilterEvent)-> Unit) {
     val colorMap = mapOf(
-        Pair(LogLevel.VERBOSE, Color(0xFF69F0AE)),
-        Pair(LogLevel.DEBUG, Color(0xFF69F0AE)),
-        Pair(LogLevel.INFO, Color(0xFF69F0AE)),
-        Pair(LogLevel.WARN, Color(0xFFFFAB40)),
-        Pair(LogLevel.ERROR, Color(0xFFFF5252)),
-        Pair(LogLevel.ASSERT, Color(0xFFFF5252)),
+        Pair(LogLevel.VERBOSE, greenDarkMode),
+        Pair(LogLevel.DEBUG, greenDarkMode),
+        Pair(LogLevel.INFO, greenDarkMode),
+        Pair(LogLevel.WARN, orangeDarkMode),
+        Pair(LogLevel.ERROR, redDarkMode),
+        Pair(LogLevel.ASSERT, redDarkMode),
     )
 
     val iconMap = mapOf(
