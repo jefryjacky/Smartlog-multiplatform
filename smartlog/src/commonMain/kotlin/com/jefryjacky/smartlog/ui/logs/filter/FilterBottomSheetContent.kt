@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.jefryjacky.smartlog.LogLevel
 import com.jefryjacky.smartlog.ui.component.DropdownMenu
 import com.jefryjacky.smartlog.ui.logLevelMap
+import com.jefryjacky.smartlog.ui.stringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import smartlogginapp.smartlog.generated.resources.Res
@@ -67,7 +68,7 @@ private fun Content(
         Spacer(Modifier.height(8.dp))
         DropdownMenu(
             label = stringResource(Res.string.log_level),
-            value = "",
+            value = state.logLevel.stringResource(),
             modifier = Modifier.fillMaxWidth(),
             list = logLevelMap.toList()
                 .map {
