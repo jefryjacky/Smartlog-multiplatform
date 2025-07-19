@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
@@ -20,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -93,9 +96,14 @@ fun LogContent(state: LogState,
             })
         }
     ) {
+        val lazyListState = rememberLazyListState()
+        LaunchedEffect(state.logs.size){
+            lazyListState.animateScrollToItem(0)
+        }
         LazyColumn(
             Modifier.padding(it).padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
+            state = lazyListState
         ) {
             items(state.logs,
                 key = {it.id}) { log->
