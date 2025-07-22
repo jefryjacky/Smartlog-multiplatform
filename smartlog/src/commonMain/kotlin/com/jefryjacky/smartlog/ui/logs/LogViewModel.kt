@@ -61,6 +61,19 @@ class LogViewModel(
                     it.copy(isScrollToTop = !it.isScrollToTop)
                 }
             }
+
+            LogEvent.PlayStopEvent -> {
+                if(state.value.isPlaying){
+                    job.cancel()
+                } else {
+                    if(state.value.isFilterOn){
+                     filter()
+                    } else {
+                        getLog()
+                    }
+                }
+                _state.update { it.copy(isPlaying = !it.isPlaying) }
+            }
         }
     }
 
@@ -76,12 +89,7 @@ class LogViewModel(
             FilterEvent.Apply -> {
                 _filterBottomSheet.update { it.copy(isOpen = false) }
                 job.cancel()
-                job = viewModelScope.launch {
-                    logRepository.filter(filterBottomSheet.value.filter)
-                        .collect { result->
-                            _state.update { it.copy(logs = result, isFilterOn = true) }
-                        }
-                }
+                filter()
             }
             FilterEvent.ResetEvent -> {
                 job.cancel()
@@ -94,6 +102,15 @@ class LogViewModel(
             is FilterEvent.TypingTagEvent -> {
                 _filterBottomSheet.update { it.copy(filter = it.filter.copy(tag = event.tag)) }
             }
+        }
+    }
+
+    private fun filter(){
+        job = viewModelScope.launch {
+            logRepository.filter(filterBottomSheet.value.filter)
+                .collect { result->
+                    _state.update { it.copy(logs = result, isFilterOn = true) }
+                }
         }
     }
 }

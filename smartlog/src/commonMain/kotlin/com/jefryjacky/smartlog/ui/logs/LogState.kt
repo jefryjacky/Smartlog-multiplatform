@@ -9,6 +9,7 @@ import com.jefryjacky.smartlog.domain.entity.LogEntity
 data class LogState(
     val isScrollToTop:Boolean = true,
     val isFilterOn: Boolean = false,
+    val isPlaying: Boolean = true,
     val logs:List<LogEntity> = emptyList(),
 ){
     @Composable
@@ -23,6 +24,15 @@ data class LogState(
     @Composable
     fun getIconFileterColor(): Color{
         return if(isFilterOn){
+            MaterialTheme.colorScheme.primary
+        } else {
+            Color.White
+        }
+    }
+
+    @Composable
+    fun getIconPlayColor(): Color{
+        return if(isPlaying){
             MaterialTheme.colorScheme.primary
         } else {
             Color.White

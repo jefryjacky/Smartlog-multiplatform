@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
@@ -26,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.jefryjacky.smartlog.LogLevel
@@ -47,13 +45,13 @@ import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import smartlogginapp.smartlog.generated.resources.Res
+import smartlogginapp.smartlog.generated.resources.baseline_pause_24
 import smartlogginapp.smartlog.generated.resources.baseline_play_arrow_24
 import smartlogginapp.smartlog.generated.resources.outline_info_24
 import smartlogginapp.smartlog.generated.resources.outline_warning_24
 import smartlogginapp.smartlog.generated.resources.outline_error_24
 import smartlogginapp.smartlog.generated.resources.outline_filter_alt_24
 import smartlogginapp.smartlog.generated.resources.outline_vertical_align_top_24
-import kotlin.math.log
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
@@ -86,9 +84,17 @@ fun LogContent(state: LogState,
             BottomAppBar(
                 modifier = Modifier.height(50.dp),
                 actions = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {
+                        event(LogEvent.PlayStopEvent)
+                    },
+                        colors = IconButtonDefaults.iconButtonColors().copy(contentColor = state.getIconPlayColor())) {
+                        val icon = if(state.isPlaying){
+                            Res.drawable.baseline_play_arrow_24
+                        } else {
+                            Res.drawable.baseline_pause_24
+                        }
                         Icon(
-                            painter = painterResource(Res.drawable.baseline_play_arrow_24),
+                            painter = painterResource(icon),
                             null
                         )
                     }
