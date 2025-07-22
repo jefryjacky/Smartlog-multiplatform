@@ -46,6 +46,12 @@ class LogDatabaseImpl @OptIn(DelicateCoroutinesApi::class) constructor(
     }
 
     override fun filter(filterEntity: FilterEntity): Flow<List<LogEntity>> {
+        if(filterEntity.tag.isBlank() && filterEntity.message.isBlank()){
+            return dao.filter( filterEntity.logLevel.priority)
+                .map {
+                    it.map { it.toEntity() }
+                }
+        }
         val queryBuilder = StringBuilder()
         if (filterEntity.tag.isNotBlank()) {
             queryBuilder.append("tag:${filterEntity.tag}* ")
