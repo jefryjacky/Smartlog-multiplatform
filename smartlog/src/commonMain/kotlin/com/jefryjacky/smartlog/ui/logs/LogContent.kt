@@ -1,6 +1,7 @@
 package com.jefryjacky.smartlog.ui.logs
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -132,6 +133,9 @@ fun LogContent(state: LogState,
             items(state.logs,
                 key = {it.id}) { log->
                 Card(
+                    modifier = Modifier.clickable{
+                        event(LogEvent.CardClickEvent(log.id))
+                    },
                     colors = CardDefaults.cardColors().copy(containerColor = colorMap[log.logLevel]!!),
                     border = BorderStroke(3.dp, colorMap[log.logLevel]!!),
                     shape = RoundedCornerShape(6.dp),

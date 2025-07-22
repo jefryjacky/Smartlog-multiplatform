@@ -62,7 +62,7 @@ class LogViewModel(
                 }
             }
 
-            LogEvent.PlayStopEvent -> {
+            is LogEvent.PlayStopEvent -> {
                 if(state.value.isPlaying){
                     job.cancel()
                 } else {
@@ -74,6 +74,8 @@ class LogViewModel(
                 }
                 _state.update { it.copy(isPlaying = !it.isPlaying) }
             }
+
+            else -> {}
         }
     }
 

@@ -1,9 +1,10 @@
 package com.jefryjacky.smartlog.domain.entity
 
+import androidx.compose.runtime.Immutable
 import com.jefryjacky.smartlog.LogLevel
 import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
 
+@Immutable
 data class LogEntity(
     val id: Long,
     val date: LocalDateTime,

@@ -19,6 +19,10 @@ class LogRepository(
         return logDatabase.getLogs()
     }
 
+    suspend fun getLog(id: Long): LogEntity {
+        return logDatabase.getLog(id)
+    }
+
     fun filter(logLevel: LogLevel): Flow<List<LogEntity>> {
         return logDatabase.filter(logLevel)
     }

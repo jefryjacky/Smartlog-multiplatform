@@ -4,6 +4,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.jefryjacky.smartlog.database.LogDatabaseImpl
 import com.jefryjacky.smartlog.repository.LogRepository
+import com.jefryjacky.smartlog.ui.logdetail.LogDetailViewModel
 import com.jefryjacky.smartlog.ui.logs.LogViewModel
 
 object AppContainer{
@@ -20,6 +21,12 @@ object AppContainer{
     val logViewModel = viewModelFactory {
         initializer{
             LogViewModel(logRepository)
+        }
+    }
+
+    val logDetailViewModel = viewModelFactory {
+        initializer{
+            LogDetailViewModel(logRepository)
         }
     }
 }

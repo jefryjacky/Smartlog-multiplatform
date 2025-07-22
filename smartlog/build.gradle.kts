@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.room)
     alias(libs.plugins.ksp)
+    kotlin("plugin.serialization") version "2.2.0"
 }
 
 kotlin {
@@ -86,6 +87,7 @@ kotlin {
                 implementation(libs.androidx.room.runtime)
                 implementation(libs.sqlite.bundled)
                 implementation(libs.navigation.compose)
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
                 // Add KMP dependencies here
             }
         }

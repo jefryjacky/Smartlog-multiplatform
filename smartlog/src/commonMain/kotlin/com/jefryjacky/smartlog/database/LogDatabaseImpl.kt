@@ -37,6 +37,11 @@ class LogDatabaseImpl @OptIn(DelicateCoroutinesApi::class) constructor(
             }
     }
 
+    override suspend fun getLog(id: Long): LogEntity {
+        val log = dao.getLog(id)
+        return log.toEntity()
+    }
+
     override fun filter(logLevel: LogLevel): Flow<List<LogEntity>> {
         return  dao.filter(logLevel.priority)
             .flowOn(ioDispatcher)

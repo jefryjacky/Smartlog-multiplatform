@@ -6,6 +6,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import com.jefryjacky.smartlog.domain.entity.LogEntity
 
+@Immutable
 data class LogState(
     val isScrollToTop:Boolean = true,
     val isFilterOn: Boolean = false,
