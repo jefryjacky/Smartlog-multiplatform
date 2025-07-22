@@ -17,6 +17,11 @@ SmartLog.e("LogViewModel", "test message")
 SmartLog.wtf("LogViewModel", "test message")
 ```
 
+## Log monitor feature
+1. filter log
+2. play/pause log
+3. auto scroll top
+
 ![](/gif/example1.gif)
 
 ![](/gif/example2.gif)
