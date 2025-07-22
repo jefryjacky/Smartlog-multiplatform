@@ -2,13 +2,13 @@
 
 This is a Kotlin Multiplatform project targeting Android, iOS (on progress).
 
-##How to open log monitor
+## How to open log monitor in Android
 ```kotlin
   val intent = Intent(this, LogActivity::class.java)
   startActivity(intent)
 ```
 
-## How to log
+## How to log KMP or Android
 ```kotlin
 SmartLog.v("LogViewModel", "test message")
 SmartLog.i("LogViewModel", "test message")
