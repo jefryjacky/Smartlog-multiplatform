@@ -55,6 +55,11 @@ class LogViewModel(
             is LogEvent.FilterEvent -> {
                 _filterBottomSheet.update { it.copy(isOpen = !it.isOpen) }
             }
+            is LogEvent.ScrollTopEvent -> {
+                _state.update {
+                    it.copy(isScrollToTop = !it.isScrollToTop)
+                }
+            }
         }
     }
 

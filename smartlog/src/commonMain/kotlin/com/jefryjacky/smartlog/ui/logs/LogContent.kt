@@ -18,6 +18,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -51,6 +52,8 @@ import smartlogginapp.smartlog.generated.resources.outline_info_24
 import smartlogginapp.smartlog.generated.resources.outline_warning_24
 import smartlogginapp.smartlog.generated.resources.outline_error_24
 import smartlogginapp.smartlog.generated.resources.outline_filter_alt_24
+import smartlogginapp.smartlog.generated.resources.outline_vertical_align_top_24
+import kotlin.math.log
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
@@ -83,29 +86,44 @@ fun LogContent(state: LogState,
             BottomAppBar(
                 modifier = Modifier.height(50.dp),
                 actions = {
-                IconButton(onClick = {}){
-                    Icon(painter = painterResource(Res.drawable.baseline_play_arrow_24),
-                        null)
-                }
-                IconButton(onClick = {
-                    event(LogEvent.FilterEvent)
-                }){
-                    Icon(painter = painterResource(Res.drawable.outline_filter_alt_24),
-                        null)
-                }
-            })
+                    IconButton(onClick = {}) {
+                        Icon(
+                            painter = painterResource(Res.drawable.baseline_play_arrow_24),
+                            null
+                        )
+                    }
+                    IconButton(onClick = {
+                        event(LogEvent.FilterEvent)
+                    }) {
+                        Icon(
+                            painter = painterResource(Res.drawable.outline_filter_alt_24),
+                            null
+                        )
+                    }
+                    IconButton(onClick = {
+                        event(LogEvent.ScrollTopEvent)
+                    }, colors = IconButtonDefaults.iconButtonColors().copy(contentColor = state.getIconScrollTopColor())) {
+                        Icon(
+                            painter = painterResource(Res.drawable.outline_vertical_align_top_24),
+                            null
+                        )
+                    }
+                })
         }
     ) {
         val lazyListState = rememberLazyListState()
-        LaunchedEffect(state.logs.size){
-            lazyListState.animateScrollToItem(0)
+        LaunchedEffect(state.logs.size, key2 = state.isScrollToTop){
+            if(state.isScrollToTop) {
+                lazyListState.animateScrollToItem(0)
+            }
         }
         LazyColumn(
             Modifier.padding(it).padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             state = lazyListState
         ) {
-            items(state.logs) { log->
+            items(state.logs,
+                key = {it.id}) { log->
                 Card(
                     colors = CardDefaults.cardColors().copy(containerColor = colorMap[log.logLevel]!!),
                     border = BorderStroke(3.dp, colorMap[log.logLevel]!!),
@@ -147,7 +165,8 @@ fun LogContent(state: LogState,
 @Preview()
 @Composable
 private fun LogContentPreview(){
-    val state = LogState(listOf(LogEntity(
+    val state = LogState(
+        logs=  listOf(LogEntity(
         1,
         date = Clock.System.now().toLocalDateTime(TimeZone.UTC),
         "tag", logLevel = LogLevel.VERBOSE,"message")))
