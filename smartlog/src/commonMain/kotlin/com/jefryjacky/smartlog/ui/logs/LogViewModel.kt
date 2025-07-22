@@ -3,6 +3,7 @@ package com.jefryjacky.smartlog.ui.logs
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jefryjacky.smartlog.SmartLog
+import com.jefryjacky.smartlog.domain.entity.FilterEntity
 import com.jefryjacky.smartlog.repository.LogRepository
 import com.jefryjacky.smartlog.ui.logs.filter.FilterBottomState
 import com.jefryjacky.smartlog.ui.logs.filter.FilterEvent
@@ -45,7 +46,7 @@ class LogViewModel(
     private fun getLog(){
         job = viewModelScope.launch {
             logRepository.getLogs().collect { logs ->
-                _state.update { it.copy(logs = logs) }
+                _state.update { it.copy(logs = logs, isFilterOn = false) }
             }
         }
     }
@@ -78,11 +79,15 @@ class LogViewModel(
                 job = viewModelScope.launch {
                     logRepository.filter(filterBottomSheet.value.filter)
                         .collect { result->
-                            _state.update { it.copy(logs = result) }
+                            _state.update { it.copy(logs = result, isFilterOn = true) }
                         }
                 }
             }
-            FilterEvent.ResetEvent -> {}
+            FilterEvent.ResetEvent -> {
+                job.cancel()
+                _filterBottomSheet.update { it.copy(filter = FilterEntity(), isOpen = false) }
+                getLog()
+            }
             is FilterEvent.TypingMessageEvent -> {
                 _filterBottomSheet.update { it.copy(filter = it.filter.copy(message = event.message)) }
             }

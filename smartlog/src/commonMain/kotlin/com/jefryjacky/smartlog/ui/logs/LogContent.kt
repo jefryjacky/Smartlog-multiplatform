@@ -94,7 +94,8 @@ fun LogContent(state: LogState,
                     }
                     IconButton(onClick = {
                         event(LogEvent.FilterEvent)
-                    }) {
+                    },
+                        colors = IconButtonDefaults.iconButtonColors().copy(contentColor = state.getIconFileterColor())) {
                         Icon(
                             painter = painterResource(Res.drawable.outline_filter_alt_24),
                             null
