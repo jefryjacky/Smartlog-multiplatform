@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "c39bfbda68977f857333a7e0b80107c0",
+    "identityHash": "4ebda4477693946b6e6d78133ac74783",
     "entities": [
       {
         "tableName": "Log",
@@ -50,11 +50,56 @@
             "id"
           ]
         }
+      },
+      {
+        "tableName": "log_fts",
+        "createSql": "CREATE VIRTUAL TABLE IF NOT EXISTS `${TABLE_NAME}` USING FTS4(`tag` TEXT NOT NULL, `message` TEXT NOT NULL, `error` TEXT NOT NULL, content=`Log`)",
+        "fields": [
+          {
+            "fieldPath": "tag",
+            "columnName": "tag",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "message",
+            "columnName": "message",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "error",
+            "columnName": "error",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": []
+        },
+        "ftsVersion": "FTS4",
+        "ftsOptions": {
+          "tokenizer": "simple",
+          "tokenizerArgs": [],
+          "contentTable": "Log",
+          "languageIdColumnName": "",
+          "matchInfo": "FTS4",
+          "notIndexedColumns": [],
+          "prefixSizes": [],
+          "preferredOrder": "ASC"
+        },
+        "contentSyncTriggers": [
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_log_fts_BEFORE_UPDATE BEFORE UPDATE ON `Log` BEGIN DELETE FROM `log_fts` WHERE `docid`=OLD.`rowid`; END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_log_fts_BEFORE_DELETE BEFORE DELETE ON `Log` BEGIN DELETE FROM `log_fts` WHERE `docid`=OLD.`rowid`; END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_log_fts_AFTER_UPDATE AFTER UPDATE ON `Log` BEGIN INSERT INTO `log_fts`(`docid`, `tag`, `message`, `error`) VALUES (NEW.`rowid`, NEW.`tag`, NEW.`message`, NEW.`error`); END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_log_fts_AFTER_INSERT AFTER INSERT ON `Log` BEGIN INSERT INTO `log_fts`(`docid`, `tag`, `message`, `error`) VALUES (NEW.`rowid`, NEW.`tag`, NEW.`message`, NEW.`error`); END"
+        ]
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c39bfbda68977f857333a7e0b80107c0')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4ebda4477693946b6e6d78133ac74783')"
     ]
   }
 }

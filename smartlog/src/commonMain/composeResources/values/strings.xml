@@ -6,7 +6,9 @@
     <string name="error">Error</string>
     <string name="assert">Assert</string>
     <string name="search">Search</string>
+    <string name="message">Message</string>
     <string name="log_level">Log level</string>
     <string name="apply">Apply</string>
     <string name="reset">Reset</string>
+    <string name="tag">tag</string>
 </resources>

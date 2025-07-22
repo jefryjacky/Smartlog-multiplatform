@@ -64,22 +64,25 @@ class LogViewModel(
                 _filterBottomSheet.update { it.copy(isOpen = false) }
             }
             is FilterEvent.LogLevelChanged -> {
-                _filterBottomSheet.update { it.copy(logLevel = event.logLevel) }
+                _filterBottomSheet.update { it.copy(filter = it.filter.copy(logLevel = event.logLevel)) }
             }
 
             FilterEvent.Apply -> {
                 _filterBottomSheet.update { it.copy(isOpen = false) }
                 job.cancel()
                 job = viewModelScope.launch {
-                    logRepository.filter(filterBottomSheet.value.logLevel)
+                    logRepository.filter(filterBottomSheet.value.filter)
                         .collect { result->
                             _state.update { it.copy(logs = result) }
                         }
                 }
             }
             FilterEvent.ResetEvent -> {}
-            is FilterEvent.SearchEvent -> {
-                _filterBottomSheet.update { it.copy(search = event.search) }
+            is FilterEvent.TypingMessageEvent -> {
+                _filterBottomSheet.update { it.copy(filter = it.filter.copy(message = event.message)) }
+            }
+            is FilterEvent.TypingTagEvent -> {
+                _filterBottomSheet.update { it.copy(filter = it.filter.copy(tag = event.tag)) }
             }
         }
     }

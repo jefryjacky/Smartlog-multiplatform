@@ -105,8 +105,7 @@ fun LogContent(state: LogState,
             verticalArrangement = Arrangement.spacedBy(8.dp),
             state = lazyListState
         ) {
-            items(state.logs,
-                key = {it.id}) { log->
+            items(state.logs) { log->
                 Card(
                     colors = CardDefaults.cardColors().copy(containerColor = colorMap[log.logLevel]!!),
                     border = BorderStroke(3.dp, colorMap[log.logLevel]!!),

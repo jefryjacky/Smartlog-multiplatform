@@ -6,11 +6,12 @@ import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import com.jefryjacky.smartlog.database.model.LogDao
+import com.jefryjacky.smartlog.database.model.LogFtsTable
 import com.jefryjacky.smartlog.database.model.LogTable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 
-@Database(entities = [LogTable::class], version = 1)
+@Database(entities = [LogTable::class, LogFtsTable::class], version = 1)
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppRoomDatabase: RoomDatabase() {
     abstract fun getLogDao(): LogDao

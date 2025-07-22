@@ -2,8 +2,10 @@ package com.jefryjacky.smartlog.repository
 
 import com.jefryjacky.smartlog.LogLevel
 import com.jefryjacky.smartlog.database.LogDatabaseImpl
+import com.jefryjacky.smartlog.domain.entity.FilterEntity
 import com.jefryjacky.smartlog.domain.entity.LogEntity
 import com.jefryjacky.smartlog.repository.database.LogDatabase
+import com.jefryjacky.smartlog.ui.logs.filter.FilterBottomState
 import kotlinx.coroutines.flow.Flow
 
 class LogRepository(
@@ -19,6 +21,10 @@ class LogRepository(
 
     fun filter(logLevel: LogLevel): Flow<List<LogEntity>> {
         return logDatabase.filter(logLevel)
+    }
+
+    fun filter(filter: FilterEntity): Flow<List<LogEntity>> {
+        return logDatabase.filter(filter)
     }
 
     companion object{

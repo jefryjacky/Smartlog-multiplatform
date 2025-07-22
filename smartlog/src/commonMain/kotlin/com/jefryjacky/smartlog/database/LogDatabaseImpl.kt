@@ -3,6 +3,7 @@ package com.jefryjacky.smartlog.database
 import com.jefryjacky.smartlog.LogLevel
 import com.jefryjacky.smartlog.database.model.LogDao
 import com.jefryjacky.smartlog.database.model.LogTable
+import com.jefryjacky.smartlog.domain.entity.FilterEntity
 import com.jefryjacky.smartlog.domain.entity.LogEntity
 import com.jefryjacky.smartlog.repository.database.LogDatabase
 import kotlinx.coroutines.CoroutineDispatcher
@@ -39,6 +40,20 @@ class LogDatabaseImpl @OptIn(DelicateCoroutinesApi::class) constructor(
     override fun filter(logLevel: LogLevel): Flow<List<LogEntity>> {
         return  dao.filter(logLevel.priority)
             .flowOn(ioDispatcher)
+            .map {
+                it.map { it.toEntity() }
+            }
+    }
+
+    override fun filter(filterEntity: FilterEntity): Flow<List<LogEntity>> {
+        val queryBuilder = StringBuilder()
+        if (filterEntity.tag.isNotBlank()) {
+            queryBuilder.append("tag:${filterEntity.tag}* ")
+        }
+        if(filterEntity.message.isNotBlank()){
+            queryBuilder.append("${filterEntity.message}*")
+        }
+        return dao.filter(queryBuilder.toString(), filterEntity.logLevel.priority)
             .map {
                 it.map { it.toEntity() }
             }

@@ -21,7 +21,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.jefryjacky.smartlog.LogLevel
 import com.jefryjacky.smartlog.ui.component.DropdownMenu
 import com.jefryjacky.smartlog.ui.logLevelMap
 import com.jefryjacky.smartlog.ui.stringResource
@@ -30,8 +29,9 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import smartlogginapp.smartlog.generated.resources.Res
 import smartlogginapp.smartlog.generated.resources.apply
 import smartlogginapp.smartlog.generated.resources.log_level
+import smartlogginapp.smartlog.generated.resources.message
 import smartlogginapp.smartlog.generated.resources.reset
-import smartlogginapp.smartlog.generated.resources.search
+import smartlogginapp.smartlog.generated.resources.tag
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,16 +59,25 @@ private fun Content(
         .padding(16.dp)) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
-            value = state.search,
+            value = state.filter.tag,
             label = {
-                Text(stringResource(Res.string.search))
+                Text(stringResource(Res.string.tag))
             }, onValueChange = {
-                event(FilterEvent.SearchEvent(it))
+                event(FilterEvent.TypingTagEvent(it))
+            })
+        Spacer(Modifier.height(8.dp))
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = state.filter.message,
+            label = {
+                Text(stringResource(Res.string.message))
+            }, onValueChange = {
+                event(FilterEvent.TypingMessageEvent(it))
             })
         Spacer(Modifier.height(8.dp))
         DropdownMenu(
             label = stringResource(Res.string.log_level),
-            value = state.logLevel.stringResource(),
+            value = state.filter.logLevel.stringResource(),
             modifier = Modifier.fillMaxWidth(),
             list = logLevelMap.toList()
                 .map {
