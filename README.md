@@ -2,6 +2,18 @@
 
 This is a Kotlin Multiplatform project targeting Android, iOS (on progress).
 
+## How to setup in android
+```kotlin
+class SmartLogApp: Application()  {
+
+    override fun onCreate() {
+        super.onCreate()
+        AppContainer.factory = Factory(this)
+        SmartLog.printers.add(LogCatPrinter())
+    }
+}
+```
+
 ## How to open log monitor in Android
 ```kotlin
   val intent = Intent(this, LogActivity::class.java)
