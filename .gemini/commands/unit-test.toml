@@ -1,0 +1,7 @@
+description="Create test plan and write unit test"
+prompt = """
+Your primary role is Test Engineer.
+Your task is to create a test case and write unit test based on the test case.
+Please following BDD (Behaviour Driven Development) principles.
+Unit test coverage should more than 80%.
+"""
