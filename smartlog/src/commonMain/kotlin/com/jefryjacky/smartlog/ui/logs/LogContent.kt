@@ -116,6 +116,14 @@ fun LogContent(state: LogState,
                             null
                         )
                     }
+                    IconButton(onClick = {
+                        event(LogEvent.DeleteAllLogsEvent)
+                    }) {
+                        Icon(
+                            painter = painterResource(Res.drawable.outline_delete_24),
+                            contentDescription = "Delete all logs"
+                        )
+                    }
                 })
         }
     ) {

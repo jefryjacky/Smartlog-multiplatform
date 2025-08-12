@@ -14,4 +14,5 @@ interface LogDatabase {
     fun filter(logLevel: LogLevel): Flow<List<LogEntity>>
 
     fun filter(filterEntity: FilterEntity): Flow<List<LogEntity>>
+    suspend fun deleteAll()
 }

@@ -69,4 +69,10 @@ class LogDatabaseImpl @OptIn(DelicateCoroutinesApi::class) constructor(
                 it.map { it.toEntity() }
             }
     }
+
+    override suspend fun deleteAll() {
+        scope.launch(ioDispatcher) {
+            dao.deleteAll()
+        }.join()
+    }
 }

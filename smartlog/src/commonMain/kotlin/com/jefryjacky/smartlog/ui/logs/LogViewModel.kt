@@ -60,6 +60,12 @@ class LogViewModel(
                 _state.update { it.copy(isPlaying = !it.isPlaying) }
             }
 
+            is LogEvent.DeleteAllLogsEvent -> {
+                viewModelScope.launch {
+                    logRepository.deleteAll()
+                }
+            }
+
             else -> {}
         }
     }
