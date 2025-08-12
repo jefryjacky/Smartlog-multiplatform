@@ -46,6 +46,7 @@ import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import smartlogginapp.smartlog.generated.resources.Res
+import smartlogginapp.smartlog.generated.resources.baseline_delete_24
 import smartlogginapp.smartlog.generated.resources.baseline_pause_24
 import smartlogginapp.smartlog.generated.resources.baseline_play_arrow_24
 import smartlogginapp.smartlog.generated.resources.outline_info_24
@@ -114,6 +115,14 @@ fun LogContent(state: LogState,
                         Icon(
                             painter = painterResource(Res.drawable.outline_vertical_align_top_24),
                             null
+                        )
+                    }
+                    IconButton(onClick = {
+                        event(LogEvent.DeleteAllLogsEvent)
+                    }) {
+                        Icon(
+                            painter = painterResource(Res.drawable.baseline_delete_24),
+                            contentDescription = "Delete all logs"
                         )
                     }
                 })

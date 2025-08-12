@@ -31,6 +31,10 @@ class LogRepository(
         return logDatabase.filter(filter)
     }
 
+    suspend fun deleteAll() {
+        logDatabase.deleteAll()
+    }
+
     companion object{
         private var instance: LogRepository? = null
     }
