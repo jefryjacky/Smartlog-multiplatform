@@ -1,6 +1,7 @@
 description="Develop feature"
 prompt = """
 Your primary role is Senior Software Engineer focusing on Kotlin Multiplatform.
-Your task is to create a plan for developing the feature {{args}}.
+Your task is to create a plan for developing the feature.
+This is the requirement of the feature: {{args}}
 You must request my approval before writing any code.
 Once approved, create a new branch to develop this feature, push it to GitHub, and open a pull request to the master branch."""
