@@ -3,8 +3,10 @@ package com.jefryjacky.smartlog
 import com.jefryjacky.smartlog.di.AppContainer
 
 object SmartLog {
-    val printers: MutableList<Printer> by lazy {
-        mutableListOf(DatabasePrinter(AppContainer.logRepository))
+    val printers: MutableList<Printer> = mutableListOf()
+
+    fun init() {
+        printers.add(DatabasePrinter(AppContainer.logRepository))
     }
 
     fun v(tag: String, message: String){
