@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LogDatabaseImpl @OptIn(DelicateCoroutinesApi::class) constructor(
     private val dao: LogDao,
@@ -71,8 +72,8 @@ class LogDatabaseImpl @OptIn(DelicateCoroutinesApi::class) constructor(
     }
 
     override suspend fun deleteAll() {
-        scope.launch(ioDispatcher) {
+        withContext(ioDispatcher) {
             dao.deleteAll()
-        }.join()
+        }
     }
 }
