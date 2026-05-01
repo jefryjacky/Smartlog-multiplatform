@@ -1,0 +1,8 @@
+{
+  "track_id": "implement_logview_for_ios_20260501",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-05-01T00:00:00Z",
+  "updated_at": "2026-05-01T00:00:00Z",
+  "description": "implement logview for iOS, this logview same as @smartlog/src/androidMain/kotlin/com/jefryjacky/smartlog/LogActivity.kt , which will be use in the @composeApp/src/iosMain/kotlin/com/jefryjacky/smartloggingapp/MainViewController.kt to navigate, this @composeApp/src/iosMain/kotlin/com/jefryjacky/smartloggingapp/MainViewController.kt is same like @composeApp/src/androidMain/kotlin/com/jefryjacky/smartloggingapp/MainActivity.kt"
+}

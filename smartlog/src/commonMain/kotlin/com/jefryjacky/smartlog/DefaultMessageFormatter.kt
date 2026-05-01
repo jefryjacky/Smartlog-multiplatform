@@ -1,9 +1,8 @@
 package com.jefryjacky.smartlog
 
 class DefaultMessageFormatter: MessageFormater {
-    private val messageBuilder = StringBuilder()
     override fun format(message: String?, throwable: Throwable?): String {
-        messageBuilder.clear()
+        val messageBuilder = StringBuilder()
         if(message!=null) {
             messageBuilder.append(message)
         }
