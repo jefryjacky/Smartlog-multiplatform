@@ -10,7 +10,7 @@
 - [x] Task: Conductor - User Manual Verification 'Kotlin API Implementation' (Protocol in workflow.md)
 
 ## Phase 2: Swift Integration
-- [ ] Task: Update iOS App Entry Point
+- [~] Task: Update iOS App Entry Point
     - [ ] Modify `iosApp/iosApp/iOSApp.swift` to include an `init()` block.
     - [ ] Add `import ComposeApp`.
     - [ ] Call `SmartLogInitKt.initSmartlog()` inside the `init()` block.

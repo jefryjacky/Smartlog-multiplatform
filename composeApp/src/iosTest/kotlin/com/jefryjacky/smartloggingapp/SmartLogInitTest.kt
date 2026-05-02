@@ -18,7 +18,7 @@ class SmartLogInitTest {
 
     @Test
     fun testInitSmartlog() {
-        initSmartlog()
+        initializeSmartlog()
         assertNotNull(AppContainer.factory)
         assertTrue(SmartLog.printers.any { it is LogCatPrinter })
     }
