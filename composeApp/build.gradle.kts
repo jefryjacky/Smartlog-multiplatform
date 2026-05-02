@@ -25,6 +25,7 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            export(project(":smartlog"))
         }
     }
     
@@ -43,7 +44,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
-            implementation(project(":smartlog"))
+            api(project(":smartlog"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

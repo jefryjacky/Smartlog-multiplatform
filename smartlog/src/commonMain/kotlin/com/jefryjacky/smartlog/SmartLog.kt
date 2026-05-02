@@ -6,6 +6,7 @@ object SmartLog {
     val printers: MutableList<Printer> = mutableListOf()
 
     fun init() {
+        if (printers.any { it is DatabasePrinter }) return
         printers.add(DatabasePrinter(AppContainer.logRepository))
     }
 
