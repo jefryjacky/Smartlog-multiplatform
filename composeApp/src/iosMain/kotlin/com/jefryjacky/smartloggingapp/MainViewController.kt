@@ -14,7 +14,6 @@ import kotlinx.coroutines.launch
 
 fun MainViewController(onNavigateToLog: () -> Unit) = ComposeUIViewController {
     AppContainer.factory = Factory()
-    SmartLog.init()
     if (SmartLog.printers.none { it is LogCatPrinter }) {
         SmartLog.printers.add(LogCatPrinter())
     }

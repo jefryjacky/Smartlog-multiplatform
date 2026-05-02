@@ -5,4 +5,5 @@ sealed interface LogEvent {
     object ScrollTopEvent: LogEvent
     object PlayStopEvent: LogEvent
     data class CardClickEvent(val id: Long): LogEvent
+    object DeleteAllLogsEvent: LogEvent
 }

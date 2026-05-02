@@ -22,4 +22,7 @@ interface LogDao {
 
     @Query("SELECT * FROM Log JOIN log_fts ON log.id = log_fts.rowid WHERE log_fts MATCH :query AND log_level >= :logLevel ORDER BY date DESC")
     fun filter(query: String, logLevel: Int = LogLevel.VERBOSE.priority): Flow<List<LogTable>>
+
+    @Query("DELETE FROM Log")
+    suspend fun deleteAll()
 }
