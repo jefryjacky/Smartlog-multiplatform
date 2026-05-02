@@ -1,10 +1,7 @@
 package com.jefryjacky.smartloggingapp
 
 import androidx.compose.ui.window.ComposeUIViewController
-import com.jefryjacky.smartlog.LogCatPrinter
 import com.jefryjacky.smartlog.SmartLog
-import com.jefryjacky.smartlog.di.AppContainer
-import com.jefryjacky.smartlog.di.Factory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -13,10 +10,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 fun MainViewController(onNavigateToLog: () -> Unit) = ComposeUIViewController {
-    AppContainer.factory = Factory()
-    if (SmartLog.printers.none { it is LogCatPrinter }) {
-        SmartLog.printers.add(LogCatPrinter())
-    }
     App(clicked = {
         runningLog()
         onNavigateToLog()
