@@ -1,0 +1,8 @@
+{
+  "track_id": "ios_runninglog_20260502",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-05-02T12:00:00Z",
+  "updated_at": "2026-05-02T12:00:00Z",
+  "description": "@composeApp/src/iosMain/kotlin/com/jefryjacky/smartloggingapp/MainViewController.kt have no runningLog function like @composeApp/src/androidMain/kotlin/com/jefryjacky/smartloggingapp/MainActivity.kt have, please help me to plan to implement it, the plan will bee use by lower model to implement"
+}
